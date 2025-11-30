@@ -41,6 +41,13 @@ export const addSettingsToLogseq = () => {
             description: "When enabled, the parent blocks content will be shown in the card.",
         },
         {
+            key: "tagWithPageName",
+            type: "boolean",
+            default: false,
+            title: "Tag cards with page name? (Recommended: Disabled)",
+            description: "When enabled, cards will be automatically tagged with the full page name using hierarchical tags.<br/><sub>For example, a card in page 'Japanese/Grammar/Verbs' will be tagged with 'Japanese::Grammar::Verbs'. Anki automatically handles filtering by parent tags like 'Japanese::Grammar' or 'Japanese'.</sub>",
+        },
+        {
             key: "useNamespaceAsDefaultDeck",
             type: "boolean",
             default: true,

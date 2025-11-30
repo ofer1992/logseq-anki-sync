@@ -683,6 +683,16 @@ export class LogseqToAnkiSync {
         } catch (e) {
             console.error(e);
         }
+        // Add page name as hierarchical tag if enabled
+        if (logseq.settings.tagWithPageName) {
+            const pageName = _.get(note, "page.originalName", "") || _.get(note, "page.properties.title", "");
+            if (pageName) {
+                // Add full page name as a hierarchical tag
+                // Anki will automatically handle parent tag filtering
+                tags.push(pageName);
+            }
+        }
+
         tags = tags.map((tag) => tag.replace(/\//g, "::"));
         tags = tags.map((tag) => tag.replace(/\s/g, "_")); // Anki doesn't like spaces in tags
         tags = _.uniq(tags);
