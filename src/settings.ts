@@ -48,12 +48,34 @@ export const addSettingsToLogseq = () => {
             description: "When enabled, the namespace of the page will be set as deck when no deck property is specified.<br/><sub>For example, if a note is in page 'Japanese/Verbs', the deck will be set as 'Japanese'.</sub>",
         },
         {
+            key: "includePageNameInDeck",
+            type: "boolean",
+            default: false,
+            title: "Include page name in deck hierarchy? (Recommended: Disabled)",
+            description: "When enabled, the full page name (including the page itself, not just namespace) will be used in the deck hierarchy.<br/><sub>For example, if a note is in page 'Japanese/Verbs', the deck will be set as 'Japanese::Verbs' instead of just 'Japanese'.</sub>",
+        },
+        {
             key: "defaultDeck",
             type: "string",
             title: "Default Deck:",
             description:
                 "The default deck to use for cards when no deck property is specified.<br/> If <code>use-namespace-as-default-deck</code> is enabled, this will be used as the default deck only when page is not in any namespace.",
             default: "Default",
+        },
+        {
+            key: "nestAllDecksUnderParent",
+            type: "boolean",
+            default: false,
+            title: "Nest all decks under a root deck? (Recommended: Disabled)",
+            description: "When enabled, all decks will be nested under the root deck specified below using Anki's hierarchical deck feature (e.g., 'Logseq::MyDeck').",
+        },
+        {
+            key: "rootDeckName",
+            type: "string",
+            title: "Root Deck Name:",
+            description:
+                "The name of the root deck to nest all cards under when 'Nest all decks under a root deck' is enabled.",
+            default: "Logseq",
         },
         {
             key: "logseqSideSettingsHeading",

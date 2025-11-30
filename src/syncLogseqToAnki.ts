@@ -599,10 +599,14 @@ export class LogseqToAnkiSync {
         }
 
         if (deck === null && useNamespaceAsDefaultDeck == true) {
-            deck = splitNamespace(
+            const pageNameParts = splitNamespace(
                 _.get(note, "page.originalName", "") ||
                 _.get(note, "page.properties.title", ""),
-            ).slice(0, -1).join("/");
+            );
+            // If includePageNameInDeck is enabled, use all parts; otherwise exclude the page name itself
+            deck = logseq.settings.includePageNameInDeck
+                ? pageNameParts.join("/")
+                : pageNameParts.slice(0, -1).join("/");
         }
 
         deck = deck || logseq.settings.defaultDeck || "Default";
@@ -610,6 +614,12 @@ export class LogseqToAnkiSync {
         if (typeof deck != "string") deck = deck[0];
 
         deck = splitNamespace(deck).join("::");
+
+        // Nest under root deck if enabled
+        if (logseq.settings.nestAllDecksUnderParent && logseq.settings.rootDeckName) {
+            const rootDeck = splitNamespace(logseq.settings.rootDeckName).join("::");
+            deck = `${rootDeck}::${deck}`;
+        }
 
         // Parse breadcrumb
         let breadcrumb = `<a href="logseq://graph/${encodeURIComponent(
